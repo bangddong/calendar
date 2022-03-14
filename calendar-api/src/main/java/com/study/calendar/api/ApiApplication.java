@@ -17,7 +17,7 @@ import java.util.List;
 @EntityScan("com.study.calendar.core")
 @EnableJpaRepositories("com.study.calendar.core")
 @RestController
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.study.calendar")
 public class ApiApplication {
 
     private final SimpleEntityRepository repository;
