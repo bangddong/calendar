@@ -37,9 +37,7 @@ public class UserService {
                 .map(user -> user.isMatch(encryptor, password) ? user : null);
     }
 
-    @Transactional
-    public User findByUserId(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("no user by id."));
+    public User getOrThrowById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("no user."));
     }
 }

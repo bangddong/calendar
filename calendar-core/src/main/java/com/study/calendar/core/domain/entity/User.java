@@ -1,6 +1,7 @@
 package com.study.calendar.core.domain.entity;
 
 import com.study.calendar.core.util.Encryptor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +10,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
-@Getter
 @Table(name = "users")
 @Entity
 public class User extends BaseEntity {
@@ -19,6 +19,19 @@ public class User extends BaseEntity {
     private String password;
     private LocalDate birthday;
 
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    @Builder
     public User(String name, String email, String password, LocalDate birthday) {
         this.name = name;
         this.email = email;
