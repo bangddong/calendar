@@ -1,2 +1,13 @@
-POST http://localhost:8080/save
+### 스케줄 등록 테스트.
+### profile 을 dev로 설정 후 테스트한다.
+POST http://localhost:8080/api/schedules/tasks?userId=1
 Content-Type: application/json
+
+{
+    "title" : "운동가기",
+    "description" : "벤치프레스",
+    "taskAt" : "2022-03-15T11:14:00"
+}
+
+###
+POST http://localhost:8080/save
