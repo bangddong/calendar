@@ -1,4 +1,4 @@
-package com.study.calendar.api.service.controller;
+package com.study.calendar.api.service;
 
 import com.study.calendar.api.dto.AuthUser;
 import com.study.calendar.api.dto.TaskCreateReq;
@@ -21,7 +21,7 @@ public class TaskService {
                         taskCreateReq.getTitle(),
                         taskCreateReq.getDescription(),
                         taskCreateReq.getTaskAt(),
-                        userService.findByUserId(authUser.getId())
+                        userService.getOrThrowById(authUser.getId())
                         );
         scheduleRepository.save(taskSchedule);
     }
