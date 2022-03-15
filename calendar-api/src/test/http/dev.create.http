@@ -22,5 +22,22 @@ Content-Type: application/json
     "attendeeIds" : [2]
 }
 
+### 알림 등록 테스트.
+### profile 을 dev로 설정 후 테스트한다.
+POST http://localhost:8080/api/schedules/notifications?userId=1
+Content-Type: application/json
+
+{
+    "title" : "새벽 헬스",
+    "notifyAt" : "2022-03-16T16:00:00",
+    "repeatInfo" : {
+      "interval" : {
+        "intervalValue": "2",
+        "timeUnit": "DAY"
+      },
+      "times": 5
+    }
+}
+
 ###
 POST http://localhost:8080/save
