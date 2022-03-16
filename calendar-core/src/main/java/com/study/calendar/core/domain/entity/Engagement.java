@@ -3,7 +3,7 @@ package com.study.calendar.core.domain.entity;
 import com.study.calendar.core.domain.Event;
 import com.study.calendar.core.domain.RequestStatus;
 import com.study.calendar.core.domain.ScheduleType;
-import lombok.Getter;
+import com.study.calendar.core.util.Period;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -31,6 +31,10 @@ public class Engagement extends BaseEntity {
         this.attendee = attendee;
     }
 
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
     public Event getEvent() {
         return schedule.toEvent();
     }
@@ -43,4 +47,7 @@ public class Engagement extends BaseEntity {
         return status;
     }
 
+    public boolean isOverlapped(Period period) {
+        return schedule.isOverlapped(period);
+    }
 }

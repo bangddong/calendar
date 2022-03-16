@@ -1,2 +1,14 @@
-GET http://localhost:8080
+### 일별 스케줄 조회 테스트
+### profile 을 dev로 설정 후 테스트한다.
+GET http://localhost:8080/api/schedules/day?userId=1&date=2022-03-16
+Content-Type: application/json
+
+### 일별 스케줄 조회 테스트
+### profile 을 dev로 설정 후 테스트한다.
+GET http://localhost:8080/api/schedules/week?userId=1&startOfWeek=2022-03-16
+Content-Type: application/json
+
+### 월별 스케줄 조회 테스트
+### profile 을 dev로 설정 후 테스트한다.
+GET http://localhost:8080/api/schedules/month?userId=1&yearMonth=2022-03
 Content-Type: application/json
