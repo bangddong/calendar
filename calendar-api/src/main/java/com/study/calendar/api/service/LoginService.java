@@ -4,6 +4,8 @@ import com.study.calendar.api.dto.LoginReq;
 import com.study.calendar.api.dto.SignUpReq;
 import com.study.calendar.core.domain.entity.User;
 import com.study.calendar.core.dto.UserCreateReq;
+import com.study.calendar.core.exception.CalendarException;
+import com.study.calendar.core.exception.ErrorCode;
 import com.study.calendar.core.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,7 +43,7 @@ public class LoginService {
         if (user.isPresent()) {
             session.setAttribute(LOGIN_SESSION_KEY, user.get().getId());
         } else {
-            throw new RuntimeException("password or email not match");
+            throw new CalendarException(ErrorCode.PASSWORD_NOT_MATCH);
         }
     }
 

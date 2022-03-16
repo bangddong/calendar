@@ -1,5 +1,7 @@
 package com.study.calendar.api.dto;
 
+import com.study.calendar.core.exception.CalendarException;
+import com.study.calendar.core.exception.ErrorCode;
 import com.study.calendar.core.util.TimeUnit;
 import lombok.Data;
 
@@ -39,7 +41,7 @@ public class NotificationCreateReq {
                         case YEAR:
                             return notifyAt.plusYears(increment);
                         default:
-                            throw new RuntimeException("bad request. not match time unit");
+                            throw new CalendarException(ErrorCode.BAD_REQUEST);
                     }
                 })
                 .collect(Collectors.toList());
