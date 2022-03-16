@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -20,13 +21,13 @@ public class LoginApiController {
     private final LoginService loginService;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<Void> signUp(@RequestBody SignUpReq signUpReq, HttpSession session) {
+    public ResponseEntity<Void> signUp(@Valid @RequestBody SignUpReq signUpReq, HttpSession session) {
         loginService.signUp(signUpReq, session);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Void> signUp(@RequestBody LoginReq loginReq, HttpSession session) {
+    public ResponseEntity<Void> signUp(@Valid @RequestBody LoginReq loginReq, HttpSession session) {
         loginService.login(loginReq, session);
         return ResponseEntity.ok().build();
     }

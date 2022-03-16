@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
@@ -26,7 +27,7 @@ public class ScheduleApiController {
 
     @PostMapping("/tasks")
     public ResponseEntity<Void> createTask(
-            @RequestBody TaskCreateReq taskCreateReq,
+            @Valid @RequestBody TaskCreateReq taskCreateReq,
             AuthUser authUser) {
         taskService.create(taskCreateReq, authUser);
         return ResponseEntity.ok().build();
@@ -34,7 +35,7 @@ public class ScheduleApiController {
 
     @PostMapping("/events")
     public ResponseEntity<Void> createEvent(
-            @RequestBody EventCreateReq eventCreateReq,
+            @Valid @RequestBody EventCreateReq eventCreateReq,
             AuthUser authUser) {
         eventService.create(eventCreateReq, authUser);
         return ResponseEntity.ok().build();
@@ -42,7 +43,7 @@ public class ScheduleApiController {
 
     @PostMapping("/notifications")
     public ResponseEntity<Void> createNotifications(
-            @RequestBody NotificationCreateReq notificationCreateReq,
+            @Valid @RequestBody NotificationCreateReq notificationCreateReq,
             AuthUser authUser) {
         notificationService.create(notificationCreateReq, authUser);
         return ResponseEntity.ok().build();

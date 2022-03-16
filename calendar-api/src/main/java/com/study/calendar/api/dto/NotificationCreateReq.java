@@ -3,6 +3,8 @@ package com.study.calendar.api.dto;
 import com.study.calendar.core.util.TimeUnit;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -12,8 +14,12 @@ import java.util.stream.IntStream;
 @Data
 public class NotificationCreateReq {
 
+    @NotBlank
     private final String title;
+
+    @NotNull
     private final LocalDateTime notifyAt;
+
     private final RepeatInfo repeatInfo;
 
     public List<LocalDateTime> getRepeatTimes() {
