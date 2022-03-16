@@ -3,10 +3,10 @@ package com.study.calendar.core.domain.entity;
 import com.study.calendar.core.domain.Event;
 import com.study.calendar.core.domain.RequestStatus;
 import com.study.calendar.core.domain.ScheduleType;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @Table(name = "engagements")
@@ -31,6 +31,10 @@ public class Engagement extends BaseEntity {
         this.attendee = attendee;
     }
 
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
     public Event getEvent() {
         return schedule.toEvent();
     }
@@ -43,4 +47,7 @@ public class Engagement extends BaseEntity {
         return status;
     }
 
+    public boolean isOverlapped(LocalDate date) {
+        return this.schedule.isOverlapped(date);
+    }
 }

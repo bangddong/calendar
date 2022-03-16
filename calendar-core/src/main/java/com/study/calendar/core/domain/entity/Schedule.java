@@ -4,9 +4,11 @@ import com.study.calendar.core.domain.Event;
 import com.study.calendar.core.domain.Notification;
 import com.study.calendar.core.domain.ScheduleType;
 import com.study.calendar.core.domain.Task;
+import com.study.calendar.core.util.Period;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Builder(access = AccessLevel.PRIVATE)
@@ -89,4 +91,7 @@ public class Schedule extends BaseEntity {
         return new Notification(this);
     }
 
+    public boolean isOverlapped(LocalDate date) {
+        return Period.of(getStartAt(), getEndAt()).isOverlapped(date);
+    }
 }

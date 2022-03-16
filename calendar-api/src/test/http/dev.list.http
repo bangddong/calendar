@@ -1,2 +1,4 @@
-GET http://localhost:8080
+### 일별 스케줄 조회 테스트
+### profile 을 dev로 설정 후 테스트한다.
+GET http://localhost:8080/api/schedules/day?userId=1&date=2022-03-16
 Content-Type: application/json

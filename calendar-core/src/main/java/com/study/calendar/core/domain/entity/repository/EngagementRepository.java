@@ -10,4 +10,5 @@ public interface EngagementRepository extends JpaRepository<Engagement, Long> {
 
     List<Engagement> findAllByAttendeeIdInAndSchedule_EndAtAfter(List<Long> attendeeIds, LocalDateTime startAt);
 
+    List<Engagement> findAllByAttendee_Id(Long id);
 }
