@@ -31,6 +31,7 @@ public class EventService {
     private final EngagementRepository engagementRepository;
     private final ApplicationEventPublisher eventPublisher;
 
+    // TODO 굳이 메일 발송이 트랜잭션 범위 안에 있어야 하는지?
     @Transactional
     public void create(EventCreateReq req, AuthUser authUser) {
         // attendees 의 스케쥴 시간과 겹치지 않는지?
