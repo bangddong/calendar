@@ -13,6 +13,7 @@ import com.study.calendar.core.exception.CalendarException;
 import com.study.calendar.core.exception.ErrorCode;
 import com.study.calendar.core.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,10 +26,10 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class EventService {
 
-    private final EmailService emailService;
     private final UserService userService;
     private final ScheduleRepository scheduleRepository;
     private final EngagementRepository engagementRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public void create(EventCreateReq req, AuthUser authUser) {
@@ -52,13 +53,12 @@ public class EventService {
         final List<User> attendeeList = req.getAttendeeIds().stream().map(userService::getOrThrowById).collect(toList());
         attendeeList.forEach(user -> {
             final Engagement engagement = engagementRepository.save(new Engagement(eventSchedule, user));
-            emailService.sendEngagement(
-                    new EngagementEmailStuff(
-                        engagement.getId(),
-                        engagement.getAttendee().getEmail(),
-                        attendeeList.stream().map(User::getEmail).collect(Collectors.toList()),
-                        engagement.getEvent().getTile(),
-                        engagement.getEvent().getPeriod()
+            eventPublisher.publishEvent(new EngagementEmailStuff(
+                    engagement.getId(),
+                    engagement.getAttendee().getEmail(),
+                    attendeeList.stream().map(User::getEmail).collect(Collectors.toList()),
+                    engagement.getEvent().getTile(),
+                    engagement.getEvent().getPeriod()
             ));
         });
     }
