@@ -17,9 +17,8 @@ public class FakeAuthUserResolver implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         final String userIdStr = webRequest.getParameter("userId");
-        if (userIdStr == null) {
-            return new AuthUserResolver().resolveArgument(parameter, mavContainer, webRequest, binderFactory);
-        }
-        return AuthUser.of(Long.parseLong(userIdStr));
+        return userIdStr == null
+                ? new AuthUserResolver().resolveArgument(parameter, mavContainer, webRequest, binderFactory)
+                : AuthUser.of(Long.parseLong(userIdStr));
     }
 }

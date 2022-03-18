@@ -1,6 +1,7 @@
 package com.study.calendar.core.domain.entity;
 
 import com.study.calendar.core.domain.Event;
+import com.study.calendar.core.domain.RequestReplyType;
 import com.study.calendar.core.domain.RequestStatus;
 import com.study.calendar.core.domain.ScheduleType;
 import com.study.calendar.core.util.Period;
@@ -49,5 +50,17 @@ public class Engagement extends BaseEntity {
 
     public boolean isOverlapped(Period period) {
         return schedule.isOverlapped(period);
+    }
+
+    public Engagement reply(RequestReplyType type) {
+        switch (type) {
+            case ACCEPT:
+                this.status = RequestStatus.ACCEPTED;
+                break;
+            case REJECT:
+                this.status = RequestStatus.REJECTED;
+                break;
+        }
+        return this;
     }
 }
