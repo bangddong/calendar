@@ -37,6 +37,7 @@ public class GlobalExceptionHandler {
         );
     }
 
+    // TODO : ApiUtil 로 옮겨보자
     @Data
     public static class ErrorResponse {
         private final ErrorCode errorCode;

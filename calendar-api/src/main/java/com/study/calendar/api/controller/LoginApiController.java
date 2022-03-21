@@ -27,7 +27,7 @@ public class LoginApiController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Void> signUp(@Valid @RequestBody LoginReq loginReq, HttpSession session) {
+    public ResponseEntity<Void> login(@Valid @RequestBody LoginReq loginReq, HttpSession session) {
         loginService.login(loginReq, session);
         return ResponseEntity.ok().build();
     }
