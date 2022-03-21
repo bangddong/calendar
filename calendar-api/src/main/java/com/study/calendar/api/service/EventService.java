@@ -13,6 +13,7 @@ import com.study.calendar.core.exception.CalendarException;
 import com.study.calendar.core.exception.ErrorCode;
 import com.study.calendar.core.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,11 +26,12 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class EventService {
 
-    private final EmailService emailService;
     private final UserService userService;
     private final ScheduleRepository scheduleRepository;
     private final EngagementRepository engagementRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
+    // TODO 굳이 메일 발송이 트랜잭션 범위 안에 있어야 하는지?
     @Transactional
     public void create(EventCreateReq req, AuthUser authUser) {
         // attendees 의 스케쥴 시간과 겹치지 않는지?
@@ -52,13 +54,12 @@ public class EventService {
         final List<User> attendeeList = req.getAttendeeIds().stream().map(userService::getOrThrowById).collect(toList());
         attendeeList.forEach(user -> {
             final Engagement engagement = engagementRepository.save(new Engagement(eventSchedule, user));
-            emailService.sendEngagement(
-                    new EngagementEmailStuff(
-                        engagement.getId(),
-                        engagement.getAttendee().getEmail(),
-                        attendeeList.stream().map(User::getEmail).collect(Collectors.toList()),
-                        engagement.getEvent().getTile(),
-                        engagement.getEvent().getPeriod()
+            eventPublisher.publishEvent(new EngagementEmailStuff(
+                    engagement.getId(),
+                    engagement.getAttendee().getEmail(),
+                    attendeeList.stream().map(User::getEmail).collect(Collectors.toList()),
+                    engagement.getEvent().getTile(),
+                    engagement.getEvent().getPeriod()
             ));
         });
     }

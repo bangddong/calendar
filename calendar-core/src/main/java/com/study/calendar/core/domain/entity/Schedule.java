@@ -23,7 +23,7 @@ public class Schedule extends BaseEntity {
     private String title;
     private String description;
 
-    @JoinColumn(name = "write_id")
+    @JoinColumn(name = "writer_id")
     @ManyToOne
     private User writer;
 
