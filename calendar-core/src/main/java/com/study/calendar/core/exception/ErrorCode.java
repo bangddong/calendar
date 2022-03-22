@@ -1,19 +1,34 @@
 package com.study.calendar.core.exception;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
+import java.util.function.Predicate;
 
 @Getter
+@RequiredArgsConstructor
 public enum ErrorCode {
-    PASSWORD_NOT_MATCH("비밀번호 불일치"),
-    ALREADY_EXISTS_USER("이미 있는 계정"),
-    USER_NOT_FOUND("존재하지 않는 계정"),
-    VALIDATION_FAIL("값이 유효하지 않음"),
-    BAD_REQUEST("잘못된 접근"),
-    EVENT_CREATE_OVERLAPPED_PERIOD("이벤트 기간 중복");
+
+    PASSWORD_NOT_MATCH("Password not match"),
+    ALREADY_EXISTS_USER("Already exists user"),
+    USER_NOT_FOUND("User not found"),
+    VALIDATION_ERROR("Validation error"),
+    BAD_REQUEST("Bad request"),
+    EVENT_CREATE_OVERLAPPED_PERIOD("Event create overlapped period"),
+
+    INTERNAL_ERROR("Internal error")
+    ;
 
     private final String message;
 
-    ErrorCode(String message) {
-        this.message = message;
+    public String getMessage(String message) {
+        return Optional.ofNullable(message)
+                .filter(Predicate.not(String::isBlank))
+                .orElse(getMessage());
+    }
+
+    public String getMessage(Throwable e) {
+        return getMessage(this.getMessage() + " - " + e.getMessage());
     }
 }

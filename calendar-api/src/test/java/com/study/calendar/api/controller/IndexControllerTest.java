@@ -10,6 +10,7 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import static com.study.calendar.api.service.LoginService.LOGIN_SESSION_KEY;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -30,7 +31,7 @@ class IndexControllerTest {
     void givenNothing_whenRequestRootPage_thenReturnIndexPage() throws Exception {
         // Given
         session = new MockHttpSession();
-        session.setAttribute("USER_ID", 1);
+        session.setAttribute(LOGIN_SESSION_KEY, 1L);
 
         // When
         final ResultActions actions = mvc.perform(
@@ -54,7 +55,7 @@ class IndexControllerTest {
         // Given
         long engagementId = 1L;
         session = new MockHttpSession();
-        session.setAttribute("USER_ID", 1);
+        session.setAttribute(LOGIN_SESSION_KEY, 1L);
         RequestReplyType type = RequestReplyType.ACCEPT;
 
         // When
