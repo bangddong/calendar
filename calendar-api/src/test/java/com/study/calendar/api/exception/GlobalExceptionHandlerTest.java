@@ -1,7 +1,5 @@
 package com.study.calendar.api.exception;
 
-import com.study.calendar.api.dto.AuthUser;
-import com.study.calendar.api.util.ApiUtils;
 import com.study.calendar.core.exception.CalendarException;
 import com.study.calendar.core.exception.ErrorCode;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,10 +17,8 @@ import org.springframework.web.servlet.handler.DispatcherServletWebRequest;
 
 import java.util.Collections;
 
-import static com.study.calendar.api.exception.ErrorHttpStatusMapper.mapToStatus;
 import static com.study.calendar.api.util.ApiUtils.error;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 @DisplayName("예외 핸들러 - API 에러 처리")
 class GlobalExceptionHandlerTest {
@@ -50,7 +46,7 @@ class GlobalExceptionHandlerTest {
         assertThat(response)
                 .hasFieldOrPropertyWithValue(
                         "body",
-                        error(false, mapToStatus(errorCode), e)
+                        error(false, errorCode.getCode(), errorCode.getMessage())
                 )
                 .hasFieldOrPropertyWithValue("headers", HttpHeaders.EMPTY)
                 .hasFieldOrPropertyWithValue("statusCode", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -67,13 +63,13 @@ class GlobalExceptionHandlerTest {
         );
 
         // When
-        ResponseEntity<Object> response = sut.validation(e, webRequest);
+        ResponseEntity<Object> response = sut.handleMethodArgumentNotValid(e, HttpHeaders.EMPTY, HttpStatus.BAD_REQUEST, webRequest);
 
         // Then
         assertThat(response)
                 .hasFieldOrPropertyWithValue(
                         "body",
-                        error(false, mapToStatus(errorCode), errorCode.getMessage())
+                        error(false, errorCode.getCode(), errorCode.getMessage())
                 )
                 .hasFieldOrPropertyWithValue("headers", HttpHeaders.EMPTY)
                 .hasFieldOrPropertyWithValue("statusCode", HttpStatus.BAD_REQUEST);
@@ -93,7 +89,7 @@ class GlobalExceptionHandlerTest {
         assertThat(response)
                 .hasFieldOrPropertyWithValue(
                         "body",
-                        error(false, mapToStatus(errorCode), errorCode.getMessage())
+                        error(false, errorCode.getCode(), errorCode.getMessage())
                 )
                 .hasFieldOrPropertyWithValue("headers", HttpHeaders.EMPTY)
                 .hasFieldOrPropertyWithValue("statusCode", HttpStatus.INTERNAL_SERVER_ERROR);

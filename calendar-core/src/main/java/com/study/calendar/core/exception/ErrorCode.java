@@ -10,18 +10,22 @@ import java.util.function.Predicate;
 @RequiredArgsConstructor
 public enum ErrorCode {
 
-    PASSWORD_NOT_MATCH("Password not match"),
-    ALREADY_EXISTS_USER("Already exists user"),
-    USER_NOT_FOUND("User not found"),
-    VALIDATION_ERROR("Validation error"),
-    BAD_REQUEST("Bad request"),
-    EVENT_CREATE_OVERLAPPED_PERIOD("Event create overlapped period"),
+    OK(0, "OK"),
 
-    INTERNAL_ERROR("Internal error")
+    BAD_REQUEST(10000, "Bad request"),
+    PASSWORD_NOT_MATCH(10001, "Password not match"),
+    ALREADY_EXISTS_USER(10002, "Already exists user"),
+    USER_NOT_FOUND(10003, "User not found"),
+    VALIDATION_ERROR(10004, "Validation error"),
+    EVENT_CREATE_OVERLAPPED_PERIOD(10005, "Event create overlapped period"),
+
+    INTERNAL_ERROR(20000, "Internal error")
     ;
 
+    private final Integer code;
     private final String message;
 
+    // Custom message
     public String getMessage(String message) {
         return Optional.ofNullable(message)
                 .filter(Predicate.not(String::isBlank))

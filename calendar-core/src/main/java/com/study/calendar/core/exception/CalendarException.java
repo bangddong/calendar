@@ -17,4 +17,9 @@ public class CalendarException extends RuntimeException{
         this.errorCode = errorCode;
     }
 
+    public CalendarException(String message) {
+        super(ErrorCode.INTERNAL_ERROR.getMessage(message));
+        this.errorCode = ErrorCode.INTERNAL_ERROR;
+    }
+
 }

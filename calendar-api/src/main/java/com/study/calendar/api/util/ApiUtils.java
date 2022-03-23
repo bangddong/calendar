@@ -16,12 +16,12 @@ public class ApiUtils {
         return new ApiDataResponse<>(response);
     }
 
-    public static ApiErrorResponse error(Boolean success, HttpStatus status, String message) {
-        return new ApiErrorResponse(success, status, message);
+    public static ApiErrorResponse error(Boolean success, Integer errorCode, String message) {
+        return new ApiErrorResponse(success, errorCode, message);
     }
 
-    public static ApiErrorResponse error(Boolean success, HttpStatus status, Exception e) {
-        return new ApiErrorResponse(success, status, e.getMessage());
+    public static ApiErrorResponse error(Boolean success, Integer errorCode, Exception e) {
+        return new ApiErrorResponse(success, errorCode, e.getMessage());
     }
 
     @Getter
@@ -30,7 +30,7 @@ public class ApiUtils {
         private final T data;
 
         private ApiDataResponse(T data) {
-            super(true, HttpStatus.OK, "OK");
+            super(true, ErrorCode.OK.getCode(), ErrorCode.OK.getMessage());
             this.data = data;
         }
     }
@@ -40,7 +40,7 @@ public class ApiUtils {
     @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
     public static class ApiErrorResponse {
         private final boolean success;
-        private final HttpStatus status;
+        private final Integer errorCode;
         private final String message;
     }
 
