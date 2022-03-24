@@ -1,5 +1,6 @@
 package com.study.calendar.api.exception;
 
+import com.study.calendar.core.exception.CalendarException;
 import com.study.calendar.core.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 
@@ -8,7 +9,7 @@ public abstract class ErrorHttpStatusMapper {
     public static HttpStatus mapToStatus(ErrorCode errorCode) {
         switch (errorCode) {
             case ALREADY_EXISTS_USER:
-            case VALIDATION_FAIL:
+            case VALIDATION_ERROR:
             case BAD_REQUEST:
             case EVENT_CREATE_OVERLAPPED_PERIOD:
                 return HttpStatus.BAD_REQUEST;
@@ -18,6 +19,13 @@ public abstract class ErrorHttpStatusMapper {
             default:
                 return HttpStatus.INTERNAL_SERVER_ERROR;
         }
+    }
+
+    public static ErrorCode mapToErrorCode(HttpStatus status) {
+        if (status == null) throw new CalendarException("HttpStatus is null.");
+
+        return status.is4xxClientError() ?
+                ErrorCode.BAD_REQUEST : ErrorCode.INTERNAL_ERROR;
     }
 
 }

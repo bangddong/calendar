@@ -25,7 +25,7 @@ public class EmailServiceImpl implements EmailService{
     @EventListener
     @Async
     @TransactionalEventListener(fallbackExecution = true)
-    public void sendEngagement(EngagementEmailStuff stuff) {
+    public void sendEngagement(EngagementEmailStuff stuff)  {
         final MimeMessagePreparator preparator = mimeMessage -> {
             final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
             helper.setTo(stuff.getToEmail());

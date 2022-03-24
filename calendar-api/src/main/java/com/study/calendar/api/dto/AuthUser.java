@@ -14,4 +14,5 @@ public class AuthUser {
     public static AuthUser of(Long id) {
         return new AuthUser(id);
     }
+
 }

@@ -1,6 +1,7 @@
 package com.study.calendar.api.config;
 
 import com.study.calendar.api.dto.AuthUser;
+import com.study.calendar.core.domain.entity.User;
 import com.study.calendar.core.exception.CalendarException;
 import com.study.calendar.core.exception.ErrorCode;
 import org.springframework.core.MethodParameter;
@@ -24,10 +25,10 @@ public class AuthUserResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        final Long userId = (Long) webRequest.getAttribute(LOGIN_SESSION_KEY, WebRequest.SCOPE_SESSION);
-        if (userId == null) {
+        final AuthUser authUser = (AuthUser) webRequest.getAttribute(LOGIN_SESSION_KEY, WebRequest.SCOPE_SESSION);
+        if (authUser == null) {
             throw new CalendarException(ErrorCode.BAD_REQUEST);
         }
-        return AuthUser.of(userId);
+        return authUser;
     }
 }
