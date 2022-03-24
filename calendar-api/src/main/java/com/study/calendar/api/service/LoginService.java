@@ -1,5 +1,6 @@
 package com.study.calendar.api.service;
 
+import com.study.calendar.api.dto.AuthUser;
 import com.study.calendar.api.dto.LoginReq;
 import com.study.calendar.api.dto.SignUpReq;
 import com.study.calendar.core.domain.entity.User;
@@ -29,19 +30,19 @@ public class LoginService {
                 signUpReq.getPassword(),
                 signUpReq.getBirthday()
         ));
-        session.setAttribute(LOGIN_SESSION_KEY, user.getId());
+        session.setAttribute(LOGIN_SESSION_KEY, AuthUser.of(user.getId()));
     }
 
     @Transactional
     public void login(LoginReq loginReq, HttpSession session) {
-        final Long userId = (Long) session.getAttribute(LOGIN_SESSION_KEY);
-        if (userId != null) {
+        final AuthUser authUser = (AuthUser) session.getAttribute(LOGIN_SESSION_KEY);
+        if (authUser != null) {
             return;
         }
         final Optional<User> user =
                 userService.findPwMatchUser(loginReq.getEmail(), loginReq.getPassword());
         if (user.isPresent()) {
-            session.setAttribute(LOGIN_SESSION_KEY, user.get().getId());
+            session.setAttribute(LOGIN_SESSION_KEY, AuthUser.of(user.get().getId()));
         } else {
             throw new CalendarException(ErrorCode.PASSWORD_NOT_MATCH);
         }
