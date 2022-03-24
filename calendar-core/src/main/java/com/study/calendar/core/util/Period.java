@@ -23,7 +23,7 @@ public class Period {
 
     public static Period of(LocalDate startAt, LocalDate endAt) {
         return new Period(startAt.atStartOfDay(),
-                endAt == null ? startAt.atStartOfDay() : endAt.atStartOfDay());
+                endAt == null ? startAt.atTime(23, 59, 59) : endAt.atTime(23, 59, 59));
     }
 
     public static Period of(LocalDate date) {
