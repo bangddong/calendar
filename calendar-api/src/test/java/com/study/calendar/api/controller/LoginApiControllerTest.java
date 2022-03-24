@@ -63,7 +63,9 @@ class LoginApiControllerTest {
         // Then
         actions
                 .andExpect(status().isOk())
-                .andDo(print());
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.errorCode").value(ErrorCode.OK.getCode()))
+                .andExpect(jsonPath("$.message").value(ErrorCode.OK.getMessage()));
     }
 
     @DisplayName("[API][POST] 로그인")
@@ -86,7 +88,9 @@ class LoginApiControllerTest {
         // Then
         actions
                 .andExpect(status().isOk())
-                .andDo(print());
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.errorCode").value(ErrorCode.OK.getCode()))
+                .andExpect(jsonPath("$.message").value(ErrorCode.OK.getMessage()));
     }
 
     private SignUpReq createSignUpRequest(
