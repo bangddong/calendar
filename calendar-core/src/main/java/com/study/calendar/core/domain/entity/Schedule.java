@@ -13,7 +13,9 @@ import java.time.LocalDateTime;
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
 @Getter
+@ToString
 @Table(name = "schedules")
 @Entity
 public class Schedule extends BaseEntity {
@@ -93,4 +95,5 @@ public class Schedule extends BaseEntity {
     public boolean isOverlapped(Period period) {
         return Period.of(getStartAt(), getEndAt()).isOverlapped(period);
     }
+
 }

@@ -23,12 +23,12 @@ public class Engagement extends BaseEntity {
     private User attendee;
 
     @Enumerated(value = EnumType.STRING)
-    private RequestStatus status;
+    private RequestStatus requestStatus;
 
     public Engagement(Schedule eventSchedule, User attendee) {
         assert eventSchedule.getScheduleType() == ScheduleType.EVENT;
         this.schedule = eventSchedule;
-        this.status = RequestStatus.REQUESTED;
+        this.requestStatus = RequestStatus.REQUESTED;
         this.attendee = attendee;
     }
 
@@ -45,7 +45,7 @@ public class Engagement extends BaseEntity {
     }
 
     public RequestStatus getStatus() {
-        return status;
+        return requestStatus;
     }
 
     public boolean isOverlapped(Period period) {
@@ -55,10 +55,10 @@ public class Engagement extends BaseEntity {
     public Engagement reply(RequestReplyType type) {
         switch (type) {
             case ACCEPT:
-                this.status = RequestStatus.ACCEPTED;
+                this.requestStatus = RequestStatus.ACCEPTED;
                 break;
             case REJECT:
-                this.status = RequestStatus.REJECTED;
+                this.requestStatus = RequestStatus.REJECTED;
                 break;
         }
         return this;
